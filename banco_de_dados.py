@@ -20,22 +20,35 @@ class BancoDeDados:
         self.mycursor.execute(f'INSERT INTO {table_name}({table_columns}) VALUES ({value_columns})')
         self.mydb.commit()
 
+<<<<<<< HEAD
     def select_elements(self, whats_you_want_select, table_name, where=False, like=False, table_value_filter=None):
+=======
+    def select_elements(self, whats_you_want_select, table_name, where=False, like=False, table_column=None, value_filter=None):
+>>>>>>> origin/master
         if not where:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name}')
         elif where:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name} '
+<<<<<<< HEAD
                                   f'WHERE {table_value_filter}')
+=======
+                                  f'WHERE {table_column} = {value_filter}')
+>>>>>>> origin/master
         elif where and like:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name} '
                                   f'WHERE {table_column} LIKE {value_filter}')
         myresult = self.mycursor.fetchall()
         for x in myresult:
             print(x)
+<<<<<<< HEAD
         return myresult
 
 
     def select_elements_order_by(self, whats_you_want_select, table_name, table_column, desc=False):
+=======
+
+    def selec_elements_order_by(self, whats_you_want_select, table_name, table_column, desc=False):
+>>>>>>> origin/master
         if not desc:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name} ORDER BY {table_column}')
         elif desc:
