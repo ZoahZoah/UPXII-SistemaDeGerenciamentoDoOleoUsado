@@ -31,8 +31,6 @@ class BancoDeDados:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name} '
                                   f'WHERE {table_column} LIKE {value_filter}')
         myresult = self.mycursor.fetchall()
-        for x in myresult:
-            print(x)
         return myresult
 
     def selec_elements_order_by(self, whats_you_want_select, table_name, table_column, desc=False):
@@ -41,8 +39,6 @@ class BancoDeDados:
         elif desc:
             self.mycursor.execute(f'SELECT {whats_you_want_select} FROM {table_name} ORDER BY {table_column} DESC')
         myresult = self.mycursor.fetchall()
-        for x in myresult:
-            print(x)
 
     def delete_user(self, table_name, table_columns, value_columns):
         self.mycursor.execute(f'DELETE FROM {table_name} WHERE {table_columns} = {value_columns}')
