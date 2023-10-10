@@ -10,6 +10,6 @@ login_window.show()
 app.exec()
 
 if login_window.login_result:
-    print('oi')
+    print('teste')
 
 
