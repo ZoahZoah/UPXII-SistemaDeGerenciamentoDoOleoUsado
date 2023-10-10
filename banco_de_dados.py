@@ -13,6 +13,7 @@ class BancoDeDados:
     def create_table(self, table_name, table):
         self.mycursor.execute(f'CREATE TABLE {table_name} ({table})')
 
+
     def drop_table(self, table_name):
         self.mycursor.execute(f'DROP TABLE {table_name}')
 

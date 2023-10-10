@@ -100,8 +100,10 @@ class LoginWindow(MainWindow):
         # Add widgets to layout
         add_widgets_list = [(cpf_button, 1, 0), (cnpj_button, 1, 1), (self.documento_text, 2, 0),
                             (self.documento_input, 2, 1), (senha_text, 3, 0), (self.senha_input, 3, 1),
-                            (login_button, 4, 0), (registry_button, 4, 1)]
+                            (login_button, 4, 1), (registry_button, 4, 0)]
         self.add_layout_list(self.layout, add_widgets_list, Qt.AlignHCenter | Qt.AlignVCenter)
+
+
 
     def on_cadastro_button_clicked(self):
         print('Botão de Cadastro clicado')
@@ -117,12 +119,13 @@ class LoginWindow(MainWindow):
                                                       where=True,
                                                       table_value_filter=f'{type_client} = "{user_answers}"'
                                                                          f' AND senha = "{password_answer}"')
-        if validate:
+        if validate ==  True:
             print('Login realizado com suceso!')
             self.window().close()
         elif not validate:
             self.show_login_error_message()
         self.login_result = bool(validate)
+
 
     def show_login_error_message(self):
         # Add widget
@@ -202,18 +205,18 @@ class RegistryDialog(QDialog, MainWindow):
         cnpj_button = self.add_button_widget('CNPJ', self.registry_cnpj)
         verify_cep = self.add_button_widget('CEP', self.on_verifycep_button_clicked)
 
-        buttons = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
-        buttonbox = QDialogButtonBox(buttons)
-        buttonbox.accepted.connect(self.on_okay_button_clicked)
-        buttonbox.rejected.connect(self.on_cancel_button_clicked)
+        registry_button = self.add_button_widget('Cadastrar', self.on_okay_button_clicked)
+        quit_button = self.add_button_widget('Sair', self.on_cancel_button_clicked)
 
         # Add layout
         add_list = [(cpf_button, 1, 0), (cnpj_button, 1, 1), (nome_text, 2, 0),
-                    (self.nome_input, 2, 1), (self.documento_text, 3, 0), (self.documento_input, 3, 1), (senha_text, 4, 0),
-                    (self.senha_input, 4, 1), (cep_text, 5, 0), (self.cep_input, 5, 1), (verify_cep, 5, 2), (rua_text, 6, 0), (self.rua_input, 6, 1),
-                    (bairro_text, 7, 0), (self.bairro_input, 7, 1), (cidade_text, 8, 0), (self.cidade_input, 8, 1)]
+                    (self.nome_input, 2, 1), (self.documento_text, 3, 0), (self.documento_input, 3, 1),
+                    (senha_text, 4, 0), (self.senha_input, 4, 1), (cep_text, 5, 0), (self.cep_input, 5, 1),
+                    (verify_cep, 5, 2), (rua_text, 6, 0), (self.rua_input, 6, 1), (bairro_text, 7, 0),
+                    (self.bairro_input, 7, 1), (cidade_text, 8, 0), (self.cidade_input, 8, 1),
+                    (quit_button, 10, 2)]
         self.add_layout_list(self.layout, add_list, Qt.AlignHCenter | Qt.AlignVCenter)
-        self.layout.addWidget(buttonbox, 10, 0, 1, 2)
+        self.layout.addWidget(registry_button, 10, 0, 1, 2)
 
     def on_verifycep_button_clicked(self):
         rua = ''
