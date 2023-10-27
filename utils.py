@@ -1,5 +1,7 @@
 from pycpfcnpj import cpfcnpj
 from pycep import PyCep
+import re
+
 class Validate:
     def __init__(self):
         pass
@@ -39,3 +41,13 @@ class Validate:
                 return False
         else:
             return False
+
+class StrManipulate:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def split_url_in_string(string):
+        url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\,]|)+')
+        url = re.findall(url_pattern, string)
+        return str(url)

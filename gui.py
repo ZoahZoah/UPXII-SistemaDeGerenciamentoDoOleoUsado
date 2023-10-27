@@ -119,7 +119,8 @@ class LoginWindow(MainWindow):
                                                       where=True,
                                                       table_value_filter=f'{type_client} = "{user_answers}"'
                                                                          f' AND senha = "{password_answer}"')
-        if validate ==  True:
+
+        if validate:
             print('Login realizado com suceso!')
             self.window().close()
         elif not validate:
@@ -284,3 +285,4 @@ class RegistryDialog(QDialog, MainWindow):
         palette.setColor(QPalette.WindowText, Qt.red)
         already_registry.setPalette(palette)
         self.layout.addWidget(already_registry, x, y)
+
