@@ -51,3 +51,11 @@ class StrManipulate:
         url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\,]|)+')
         url = re.findall(url_pattern, string)
         return str(url)
+
+    @staticmethod
+    def split_wpp_url_in_string(string):
+        print(string)
+        url_pattern = re.compile(r'https://wa\.me/\d+')
+        urls = re.findall(url_pattern, string)
+        print(urls)
+        return str(urls)

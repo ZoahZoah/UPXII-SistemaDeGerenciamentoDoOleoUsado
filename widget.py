@@ -2,9 +2,8 @@ import sys
 from utils import StrManipulate
 from PySide6.QtCore import QUrl, Signal, Qt
 from PySide6.QtGui import QDesktopServices, QMouseEvent
-from PySide6.QtWidgets import QApplication, QWidget, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QDialog
 from ui_form import Ui_Widget
-
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -33,12 +32,19 @@ class Widget(QWidget):
         button_suporte_page.clicked.connect(self.on_suporte_bttn_clicked)
         button_sobre_page.clicked.connect(self.on_sobre_bttn_clicked)
 
-        # Ponto de Coleta Page
-        # Open URL recicla sampa
-        buscar_ponto_coleta = self.ui.LinkReciclaSampa
-        recicla_sampa = buscar_ponto_coleta.text()
-        self.url_recicla_sampa = StrManipulate.split_url_in_string(recicla_sampa)
-        self.qlabel_as_a_link_interaction(buscar_ponto_coleta, self.on_buscar_ponto_coleta_clicked)
+        # Button Calculadora Page
+        button_calculadora = self.ui.pushButton
+        button_calculadora.clicked.connect(self.on_calculadora_button_clicked)
+
+    def result_calculator(self):
+        peso_oleo = self.ui.PesoProdutoKg.text()
+        result = float(peso_oleo) * 2
+        return result
+
+    def on_calculadora_button_clicked(self):
+        result = self.result_calculator()
+        dlg = ResultDialog(result)
+        dlg.exec()
 
     def qlabel_as_a_link_interaction(self, qlabel, action):
         qlabel.setOpenExternalLinks(True)
@@ -74,6 +80,29 @@ class Widget(QWidget):
 
     def on_sobre_bttn_clicked(self):
         self.set_mainpage(4)
+
+class ResultDialog(QDialog):
+    def __init__(self, result, parent=None):
+        super().__init__(parent)
+
+        # Window Config
+        self.setWindowTitle('Resultado')
+
+        # Layout config
+        self.layout = QVBoxLayout()
+        ok_button = QPushButton('Okay')
+        self.result_label = QLabel()
+        self.layout.addWidget(self.result_label)
+        self.layout.addWidget(ok_button)
+        self.setLayout(self.layout)
+
+        # Initialize the result label
+        self.update_result(result)
+
+        ok_button.clicked.connect(self.accept)
+
+    def update_result(self, result):
+        self.result_label.setText(f'Seu resultado é: R${result:.2f}')
 
 
 if __name__ == "__main__":
