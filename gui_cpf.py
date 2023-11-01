@@ -8,19 +8,19 @@ from PySide6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxL
 from ui_form import Ui_Widget
 from banco_de_dados import BancoDeDados
 
-class Widget(QWidget):
-    def __init__(self):
+class CpfInterface(QWidget):
+    def __init__(self, database, user, system_type):
         super().__init__()
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
         self.setFixedSize(750, 600)
 
         # Database config
-        self.db = BancoDeDados('localhost', 'root', '93100', 'reciclagem')
+        self.db = database
 
         # user and system
-        self.user = '448.593.208-75'
-        self.system = 'CPF'
+        self.user = user
+        self.system = system_type
         self.ui.user_qlabel.setText(self.user)
         self.ui.system_qlabel.setText(self.system)
 
@@ -179,8 +179,3 @@ class ErrorDialog(QDialog):
         self.setLayout(self.layout)
         ok_button.clicked.connect(self.accept)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    widget = Widget()
-    widget.show()
-    sys.exit(app.exec())

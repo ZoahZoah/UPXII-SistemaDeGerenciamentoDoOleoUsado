@@ -58,6 +58,10 @@ class LoginWindow(MainWindow):
         super().__init__()
         self.login_result = False
 
+        # User information
+        self.__login_user = ''
+        self.__system_type = ''
+
         # definindo o banco de dados
         self.db_reciclagem = db
 
@@ -68,6 +72,22 @@ class LoginWindow(MainWindow):
         self.setCentralWidget(central_widget)
         self.layout = QGridLayout(central_widget)
         self.login_cpf()
+
+    @property
+    def login_user(self):
+        return self.__login_user
+
+    @login_user.setter
+    def login_user(self, new_information):
+        self.__login_user = new_information
+
+    @property
+    def system_type(self):
+        return self.__system_type
+
+    @system_type.setter
+    def system_type(self, new_system):
+        self.__system_type = new_system
 
     def login_cpf(self):
         self.login(False)
@@ -103,8 +123,6 @@ class LoginWindow(MainWindow):
                             (login_button, 4, 1), (registry_button, 4, 0)]
         self.add_layout_list(self.layout, add_widgets_list, Qt.AlignHCenter | Qt.AlignVCenter)
 
-
-
     def on_cadastro_button_clicked(self):
         print('Botão de Cadastro clicado')
         dlg = RegistryDialog(self.db_reciclagem)
@@ -112,7 +130,6 @@ class LoginWindow(MainWindow):
 
     def on_login_button_clicked(self):
         user_answers = self.documento_input.text()
-
         password_answer = self.senha_input.text()
         type_client = self.documento_text.text()
         validate = self.db_reciclagem.select_elements('*', f'clientes{type_client}',
@@ -122,6 +139,12 @@ class LoginWindow(MainWindow):
 
         if validate:
             print('Login realizado com suceso!')
+            self.login_user = user_answers
+            match type_client:
+                case 'CPF':
+                    self.system_type = 'CPF'
+                case 'CNPJ':
+                    self.system_type = 'CNPJ'
             self.window().close()
         elif not validate:
             self.show_login_error_message()
